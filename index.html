@@ -14,9 +14,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.development.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.development.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.25.6/babel.min.js"></script>
 
-  <script type="text/babel">
+  <script>
     try {
       const { useState } = React;
       const { createRoot } = ReactDOM;
@@ -69,63 +68,67 @@
         const days = getDaysInMonth();
         const monthName = currentDate.toLocaleString('default', { month: 'long', year: 'numeric' });
 
-        return (
-          <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
-              <h1 className="text-2xl font-bold mb-4 text-center">Turnus Calendar</h1>
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">Start Date for Work Cycle:</label>
-                <input
-                  type="date"
-                  defaultValue="2025-01-01"
-                  onChange={handleStartDateChange}
-                  className="p-2 border rounded-lg w-full max-w-xs"
-                />
-              </div>
-              <div className="flex justify-between mb-4">
-                <button
-                  onClick={prevMonth}
-                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                >
-                  Previous
-                </button>
-                <h2 className="text-xl font-semibold">{monthName}</h2>
-                <button
-                  onClick={nextMonth}
-                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                >
-                  Next
-                </button>
-              </div>
-              <div className="grid grid-cols-7 gap-2 text-center">
-                {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-                  <div key={day} className="font-semibold">
-                    {day}
-                  </div>
-                ))}
-                {days.map((day, index) => (
-                  <div
-                    key={index}
-                    className={`p-2 rounded-lg ${
+        return React.createElement(
+          'div',
+          { className: 'min-h-screen bg-gray-100 flex items-center justify-center' },
+          React.createElement(
+            'div',
+            { className: 'bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl' },
+            React.createElement('h1', { className: 'text-2xl font-bold mb-4 text-center' }, 'Turnus Calendar'),
+            React.createElement(
+              'div',
+              { className: 'mb-4' },
+              React.createElement('label', { className: 'block text-sm font-medium mb-1' }, 'Start Date for Work Cycle:'),
+              React.createElement('input', {
+                type: 'date',
+                defaultValue: '2025-01-01',
+                onChange: handleStartDateChange,
+                className: 'p-2 border rounded-lg w-full max-w-xs'
+              })
+            ),
+            React.createElement(
+              'div',
+              { className: 'flex justify-between mb-4' },
+              React.createElement('button', { onClick: prevMonth, className: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600' }, 'Previous'),
+              React.createElement('h2', { className: 'text-xl font-semibold' }, monthName),
+              React.createElement('button', { onClick: nextMonth, className: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600' }, 'Next')
+            ),
+            React.createElement(
+              'div',
+              { className: 'grid grid-cols-7 gap-2 text-center' },
+              ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) =>
+                React.createElement('div', { key: day, className: 'font-semibold' }, day)
+              ),
+              days.map((day, index) =>
+                React.createElement(
+                  'div',
+                  {
+                    key: index,
+                    className: `p-2 rounded-lg ${
                       day
                         ? isWorkDay(day)
                           ? 'bg-green-200 hover:bg-green-300'
                           : 'bg-red-200 hover:bg-red-300'
                         : 'bg-gray-100'
-                    }`}
-                  >
-                    {day ? day.getDate() : ''}
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 text-center">
-                <p>
-                  <span className="inline-block w-4 h-4 bg-green-200 mr-2"></span>Work Days
-                  <span className="inline-block w-4 h-4 bg-red-200 ml-4 mr-2"></span>Free Days
-                </p>
-              </div>
-            </div>
-          </div>
+                    }`
+                  },
+                  day ? day.getDate() : ''
+                )
+              )
+            ),
+            React.createElement(
+              'div',
+              { className: 'mt-4 text-center' },
+              React.createElement(
+                'p',
+                null,
+                React.createElement('span', { className: 'inline-block w-4 h-4 bg-green-200 mr-2' }),
+                'Work Days',
+                React.createElement('span', { className: 'inline-block w-4 h-4 bg-red-200 ml-4 mr-2' }),
+                'Free Days'
+              )
+            )
+          )
         );
       }
 
@@ -134,7 +137,7 @@
         throw new Error("Root element not found");
       }
       const root = createRoot(rootElement);
-      root.render(<CalendarApp />);
+      root.render(React.createElement(CalendarApp));
     } catch (e) {
       console.error('Error rendering app:', e);
       document.getElementById('error').style.display = 'block';
